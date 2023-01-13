@@ -12,8 +12,8 @@ using PhotoBlog.Data;
 namespace PhotoBlog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230111113927_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230113113012_TagsEdit")]
+    partial class TagsEdit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,11 +57,59 @@ namespace PhotoBlog.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTıme = new DateTime(2023, 1, 11, 14, 39, 27, 345, DateTimeKind.Local).AddTicks(577),
+                            CreatedTıme = new DateTime(2023, 1, 13, 14, 30, 11, 851, DateTimeKind.Local).AddTicks(1426),
                             Description = "As the sun sets behind the hills, I watch the unique blue of the sea.",
                             Photo = "sample.jpg",
                             Title = "Mountains and Sea"
                         });
+                });
+
+            modelBuilder.Entity("PhotoBlog.Data.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("PostTag", b =>
+                {
+                    b.Property<int>("PostsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PostsId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("PostTag");
+                });
+
+            modelBuilder.Entity("PostTag", b =>
+                {
+                    b.HasOne("PhotoBlog.Data.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PhotoBlog.Data.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

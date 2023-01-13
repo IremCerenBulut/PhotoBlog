@@ -14,16 +14,22 @@ html {
 }
 
 body {
-  margin-bottom: 600px;
-  margin:0 auto;
+  margin-bottom: 60px;
+}
+.posts {
+    max-width: 600px;
+    margin: 0 auto;
 }
 .post-image > img{
     width:100%
 }
-
+.post-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: .8em;
+    padding: .3rem 0 ;
+}
 .post-time{
-    text-align:right;
     font-style:italic;
-    font-size:.8em;
-    padding: .3rem 0 0 0;
+   
 }

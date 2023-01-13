@@ -14,7 +14,7 @@ namespace PhotoBlog.Data
         [MaxLength(255)]
         public string Photo { get; set; }=null!;
         public DateTime CreatedTıme { get; set; } = DateTime.Now;
-
+        public List<Tag> Tags { get; set; } = new();
 
     }
 }
